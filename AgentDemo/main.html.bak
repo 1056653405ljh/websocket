@@ -1,0 +1,303 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/softphone.css" rel="stylesheet" type="text/css" />
+<link href="css/button_style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="./js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="./js/softphone.js"></script>
+<script type="text/javascript" src="./js/ui.js"></script>
+
+<script type="text/javascript">
+<!--
+	jQuery(document).ready(function()
+	{
+		styleToolbar();
+		stylegrid();
+	});
+
+function styleToolbar()//让按钮有动态效果
+{
+	var clshover,clsdown;
+
+	/*jQuery(".head .logo .tool ul li input[type='button'],.head .logo-callin .tool ul li input[type='button']").hover(
+		function()
+		{
+			switch(jQuery(this).attr("class"))
+			{
+				case "btn-answer":
+					clshover = "btn-answer-hover";
+					break
+				case "btn-callout":
+					clshover = "btn-callout-hover";
+					break
+				case "btn-hungoff":
+					clshover = "btn-hungoff-hover";
+					break
+				case "btn-three":
+					clshover = "btn-three-hover";
+					break
+				case "btn-shift":
+					clshover = "btn-shift-hover";
+					break
+				case "btn-cancel":
+					clshover = "btn-cancel-hover";
+					break
+			}
+			jQuery(this).addClass(clshover);
+		},
+		function()
+		{
+			jQuery(this).removeClass(clshover);
+		}
+	);*/
+
+	jQuery(".head .logo .tool,.head .logo-callin .tool").hover(
+		function()
+		{
+			jQuery(this).addClass("tool-hover");
+		},
+		function()
+		{
+			jQuery(this).removeClass("tool-hover");
+		}
+	);
+
+	jQuery(".topbar ul li input[class='btn']").hover(
+		function()
+		{
+			jQuery(this).addClass("btn-hover");
+		},
+		function()
+		{
+			jQuery(this).removeClass("btn-hover");
+		}
+	);
+
+	jQuery(".topbar ul li input[class='loginbtn']").hover(
+		function()
+		{
+			jQuery(this).addClass("loginbtn-hover");
+		},
+		function()
+		{
+			jQuery(this).removeClass("loginbtn-hover");
+		}
+	);
+}
+
+function onObjectError()
+{
+    alert("not loaded!");
+}
+//-->
+</script>
+</head>
+<body onkeydown="phone.keyDown();">
+	<div class="topbar">
+		<ul>
+			<li>IP：<input class="txt-w119" type="text" id="ctiIp1" value="192.168.0.225"/>-<input class="txt-w119" type="text" id="ctiIp2"/></li>
+			<li>端口：<input class="txt-w59" type="text" id="ctiPort" value="8012"/></li>
+			<li>
+				<input class="btn" id="btConnect" type="button" value="连接" hidefocus="true" onclick="ui_connect();" />
+				<input class="btn" id="btDisconnect" type="button" value="断开" hidefocus="true" onclick="ui_disconnect();" />
+			</li>
+			<li class="fgx">|</li>
+			<li>用户名：<input class="txt-w104" type="text" id="agentName" value="102"/></li>
+			<li>密码：<input class="txt-w104" type="password" id="agentPassword" value="102"/></li>
+			<li>
+				话机：
+				<input type="text" id="selectPhoneNumber" style="width:4em;" value="1010"/>
+			</li>
+			<li>
+				<input class="loginbtn" id="btLogin" type="button" value="登录" hidefocus="true" onclick="ui_login();" />
+				<input class="logoutbtn" id="btLogout" type="button" value="登出" hidefocus="true" onclick="ui_logout();" />
+			</li>
+		</ul>
+	</div><!-- topbar end -->
+
+	<div class="head">
+		<div class="logo" id="callingprompt"><!-- 交替变换这里的class（logo、logo-callin）就是来电闪红灯的效果 -->
+			<div class="info">
+				<ul>
+					<li onclick="javascript:alert(jQuery('#btAnswerCall').attr('class'));">排队电话数量：<span id="queueCount">0</span></li>
+					<li>坐席空闲数/登录座席总数：<span id="busyAgentTotal">0/0</span></li>
+					<!--
+					<li>通话时长：<span id="talkDuration">0</span></li>
+					-->
+				</ul>
+			</div>
+
+			<div class="tool"><!-- 右边的功能按钮区域 -->
+				<ul>
+					<li>
+						<select id="selectAgentStatus" onchange="ui_agentChangeStatus();">
+							<option value="准备接听" selected="selected">准备接听</option>
+							<option value="其它">其它</option>
+							<option value="用餐">用餐</option>
+							<option value="午休">午休</option>
+							<option value="临时外出">临时外出</option>
+						</select>
+						&nbsp;&nbsp;
+						<input class="txt-w182" type="text" id="txtCallingNumber" value="10086"/>
+						<input class="txt-w182" type="text" id="txtAppdata" />
+					</li>
+					<li class="t-fgx">
+						<input class="btn-answer" id="btAnswerCall" type="button" value="" hidefocus="true" onclick="agent.answerCall();" />
+						<input class="btn-callout" id="btMakeCall" type="button" value="" hidefocus="true" onclick="ui_makecall();" />
+						<input class="btn-hungoff" id="btHangupCall" type="button" value="" hidefocus="true" onclick="ui_hangUp();" />
+					</li>
+					<li>
+						<input class="btn-three" id="btConferenceCall" type="button" value="" hidefocus="true" onclick="ui_conference();" />
+						<input class="btn-shift" id="btTransferCall" type="button" value="" hidefocus="true" onclick="ui_transfer();" />
+						<input class="btn-cancel" id="btCancelCall" type="button" value="" hidefocus="true" onclick="agent.cancel();" />
+					</li>
+				</ul>
+			</div><!-- tool end -->
+		</div>
+	</div><!-- head end -->
+
+	<div class="main">
+		<h2>坐席状态监控</h2>
+		<div id="agentSatausList">
+			<table class="grid"><!-- 监控表格 -->
+				<thead>
+					<tr>
+						<td>坐席号</td>
+						<td>坐席名</td>
+						<td>电话机</td>
+						<td>状态</td>
+						<td>操作</td>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="5"></td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+		<table class="msg"><!-- 消息 -->
+			<tr>
+				<td width="50%" valign="top">
+					<fieldset>
+						<legend>本机消息</legend>
+						<textarea id="log1" ondblclick="this.value = ''"></textarea>
+					</fieldset>
+				</td>
+				<td width="10"></td>
+				<td width="50%" valign="top">
+					<fieldset>
+						<legend>其他消息</legend>
+						<textarea id="log2" ondblclick="this.value = ''"></textarea>
+					</fieldset>
+				</td>
+			</tr>
+		</table>
+
+		<!--配置-->
+        <table class="msg">
+            <!-- 消息 -->
+            <tr>
+                <td width="50%" valign="top">
+                    <fieldset>
+                        <legend>座席功能配置</legend>
+                        <p><label>本机日志</label><span><input type="checkbox" id="islog1" onclick="config.setIsLog1(this);" checked="checked" /><span /></span></p>
+                        <p><label>其它日志</label><span><input type="checkbox" id="islog2" onclick="config.setIsLog2(this);" checked="checked" /><span /></span></p>
+                        <p><label>监控开关</label><span><input type="checkbox" id="isMonitor" onclick="config.setIsMonitor(this);" checked="checked" /><span /></span></p>
+                        <p><label>过滤重复消息</label><span><input type="checkbox" id="isFilter" onclick="config.setIsFilter(this);" checked="checked" /><span /></span></p>
+                        <p>
+                            <label>自动拨打</label>
+                            <span>
+                                <input type="text" id="AutoMakeCallInterval" size="5" value="2" />
+                                <input type="checkbox" id="isAutoMakeCall" onclick="config.setAutoMakeCall(this);" />
+                                <label>建议使用2秒以上的间隔时间</label>
+                                <span />
+                            </span>
+                        </p>
+                        <p>
+                            <label>自动接听</label>
+                            <span>
+                                <input type="text" id="AutoAnswerCallInterval" size="5" value="0" />
+                                <input type="checkbox" id="isAutoAnswerCall" onclick="config.setAutoAnswerCall(this);" />
+                                <span />
+                            </span>
+                        </p>
+                        <p>
+                            <label>自动挂断</label>
+                            <span>
+                                <input type="text" id="AutoHangUpInterval" size="5" value="0" />
+                                <input type="checkbox" id="isAutoHangUp" onclick="config.setAutoHangUp(this);" />
+                                <span />
+                            </span>
+                        </p>
+                    </fieldset>
+                </td>
+            </tr>
+        </table>
+        <table class="msg">
+            <tr>
+                <td width="50%" valign="top">
+                    <fieldset>
+                        <legend>自动拨打测试</legend>
+                        <p>
+                            <label>被叫号码：</label>
+                            <span>
+                                <input class="txt-w182" type="text" id="txtAutoCallee" />
+                            </span>
+                        </p>
+                        <p>
+                            <label>振铃时长：</label>
+                            <input class="txt-w182" type="text" id="txtTimeout" />
+                        </p>
+                        <p>
+                            <label>提示文件：</label>
+                            <input class="txt-w182" type="text" id="txtTipInfo" />
+                        </p>
+                        <p>
+                            <input id="btAutoMakeCall" type="button" value="自动拨打" hidefocus="true" onclick="ui_autoMakecall();" />
+                        </p>
+                        <p>
+                            <input id="btAutoLoginLogout" type="button" value="自动登录登出" hidefocus="true" onclick="ui_autoLoginLogout();" />
+                        </p>
+                    </fieldset>
+                </td>
+            </tr>
+        </table>
+        <table class="msg">
+            <tr>
+                <td width="50%" valign="top">
+                    <fieldset>
+                        <legend>自动登录登出测试</legend>
+                        <p>
+                            <label>间隔时间：</label>
+                            <input class="txt-w182" type="text" id="txtLoginLogoutTimeout" />
+                        </p>                      
+                        <p>
+                            <input id="btAutoLoginLogout" type="button" value="自动登录登出" hidefocus="true" onclick="ui_autoLoginLogout();" />
+                        </p>
+                    </fieldset>
+                </td>
+            </tr>
+        </table>
+	</div>
+
+
+    <script type="text/javascript" src="./agentJs/Log.js"></script>
+    <script type="text/javascript" src="./agentJs/Agent.js"></script>
+    <script type="text/javascript" src="./agentJs/Phone.js"></script>
+    <script type="text/javascript" src="./agentJs/Event.js"></script>
+    <script type="text/javascript" src="./agentJs/Cti.js"></script>
+    <script type="text/javascript" src="./agentJs/Config.js"></script>
+    <script type="text/javascript" src="./agentJs/Monitor.js"></script>
+    <script type="text/javascript" src="./agentJs/Call.js"></script>
+    <script type="text/javascript" src="./agentJs/Websocket.js"></script>
+    <script type="text/javascript" src="./agentJs/pdu.js"></script>
+    <script type="text/javascript" src="./agentJs/ljhcti.js"></script>
+     
+</body>
+</html>

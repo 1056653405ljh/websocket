@@ -1,0 +1,79 @@
+/* 呼叫中心功能按钮互锁样式 
+* 请根据需要修改background:url()里面的路径
+* 如果ie6下样式有问题，请删除本文件的注释再试试
+*/
+
+
+/*接听按钮*/
+.btAnswerCall_useable{
+	cursor:hand; width:82px; height:30px; border:0; background:url(../images/softphone-spirit.jpg) no-repeat 0 -302px;
+}
+
+.btAnswerCall_unuseable{
+	cursor:hand; width:82px; height:30px; border:0; background:url(../images/softphone-spirit.jpg) no-repeat -166px -302px;
+}
+
+/*拨打按钮*/
+.btMakeCall_useable{
+	cursor:hand; width:80px; height:30px; border:0; background:url(../images/softphone-spirit.jpg) no-repeat 0 -333px;
+}
+
+.btMakeCall_unuseable{
+	cursor:hand; width:80px; height:30px; border:0; background:url(../images/softphone-spirit.jpg) no-repeat -162px -333px;
+}
+
+/*转移按钮*/
+.btTransferCall_useable{
+	cursor:hand; width:80px; height:30px; border:0; background:url(../images/softphone-spirit.jpg) no-repeat 0 -426px;
+}
+
+.btTransferCall_unuseable{
+	cursor:hand; width:80px; height:30px; border:0; background:url(../images/softphone-spirit.jpg) no-repeat -162px -426px;
+}
+
+/*三方会议按钮*/
+.btConferenceCall_useable{
+	cursor:hand; width:82px; height:30px; border:0; background:url(../images/softphone-spirit.jpg) no-repeat 0 -395px;
+}
+
+.btConferenceCall_unuseable{
+	cursor:hand; width:82px; height:30px; border:0; background:url(../images/softphone-spirit.jpg) no-repeat -166px -395px;
+}
+
+/*取消*/
+.btCancelCall_useable{
+	cursor:hand; width:78px; height:30px; border:0; background:url(../images/softphone-spirit.jpg) no-repeat 0 -457px;
+}
+
+.btCancelCall_unuseable{
+	cursor:hand; width:78px; height:30px; border:0; background:url(../images/softphone-spirit.jpg) no-repeat -159px -457px;
+}
+
+/*挂断按钮*/
+.btHangupCall_useable{
+	cursor:hand; width:79px; height:30px; border:0; background:url(../images/softphone-spirit.jpg) no-repeat 0 -365px;
+}
+
+.btHangupCall_unuseable{
+	cursor:hand; width:79px; height:30px; border:0; background:url(../images/softphone-spirit.jpg) no-repeat -159px -364px;
+}
+
+/*登录按钮*/
+.btLogin_useable{
+	cursor:hand;width:54px; height:21px; border:0; background:url(../images/softphone-spirit.jpg) no-repeat -326px -302px; padding:3px 0 0 0;
+}
+.btLogin_unuseable{
+	cursor:hand;width:54px; height:21px; border:0; background:url(../images/softphone-spirit.jpg) no-repeat -326px -324px; padding:3px 0 0 0;
+}
+
+/*登出按钮*/
+.btLogout_useable{
+	cursor:hand;width:54px; height:21px; border:0; background:url(../images/softphone-spirit.jpg) no-repeat -326px -302px; padding:3px 0 0 0;
+}
+.btLogout_unuseable{
+	cursor:hand;width:54px; height:21px; border:0; background:url(../images/softphone-spirit.jpg) no-repeat -326px -324px; padding:3px 0 0 0;
+}
+
+body{
+	background:#000;
+}
